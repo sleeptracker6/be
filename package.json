@@ -1,21 +1,11 @@
 {
   "name": "be",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:watch": "cross-env NODE_ENV=testing jest --watchAll",
+    "test": "cross-env NODE_ENV=testing jest",
+    "start:watch": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sleeptracker6/be.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sleeptracker6/be/issues"
-  },
-  "homepage": "https://github.com/sleeptracker6/be#readme",
   "devDependencies": {
     "cross-env": "^7.0.2",
     "jest": "^26.0.1",

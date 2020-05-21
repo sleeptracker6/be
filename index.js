@@ -3,7 +3,8 @@ const helmet = require("helmet")
 const cors = require("cors")
 const session = require("express-session")
 const cookieParser = ("cookie-parser")
-// Router(s)?
+const authRouter = require("./auth/auth-router")
+const usersRouter = require("./users/users-router")
 
 const server = express()
 const port = process.env.PORT || 8080
@@ -14,8 +15,8 @@ server.use(express.json())
 server.use(cookieParser)
 
 
-//server.use ROUTER
-//server.use ROUTER
+server.use("/auth", authRouter)
+server.use("/users", usersRouter)
 
 server.get("/", (req, res, next) => {
 	res.json({
@@ -30,6 +31,10 @@ server.use((err, req, res, next) => {
 	})
 })
 
-server.listen(port, () => {
-	console.log(`Running at http://localhost:${port}`)
-})
+if (!module.parent) {
+	server.listen(port, () => {
+		console.log(`Running at http://localhost:${port}`)
+	})
+}
+
+module.exports = server
