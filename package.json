@@ -4,7 +4,7 @@
     "test:watch": "cross-env NODE_ENV=testing jest --watchAll",
     "test": "cross-env NODE_ENV=testing jest",
     "start:watch": "cross-env NODE_ENV=development nodemon index.js",
-    "start": "cross-env NODE_ENV=production node index.js"
+    "start": "cross-env NODE_ENV=development node index.js"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",

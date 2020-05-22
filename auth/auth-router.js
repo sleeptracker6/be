@@ -8,8 +8,8 @@ const router = express.Router()
 
 router.post("/register", async (req, res, next) => {
 	try {
-		const { username } = req.body
-		const user = await Users.findBy({ username }).first()
+		const { name } = req.body
+		const user = await Users.findBy({ name }).first()
 
 		if (user) {
 			return res.status(409).json({
@@ -29,7 +29,7 @@ router.post("/login", async (req, res, next) => {
 	}
 
 	try {
-		const user = await Users.findBy({ username: req.body.username }).first()
+		const user = await Users.findBy({ name: req.body.name }).first()
 		if (!user) {
 			return res.status(401).json(authError)
 		}
@@ -45,9 +45,10 @@ router.post("/login", async (req, res, next) => {
 			userRole: "normal", 
 		}
 
-		res.cookie("token", jwt.sign(tokenPayload, process.env.JWT_SECRET))
+		const token = jwt.sign(tokenPayload, process.env.JWT_SECRET)
+		console.log(process.env.JWT_SECRET)
 		res.json({
-			message: `Welcome ${user.username}!`,
+			message: `Welcome ${user.name}!`,
 			token: token,
 		})
 	} catch(err) {
@@ -57,6 +58,7 @@ router.post("/login", async (req, res, next) => {
 
 router.get("/logout", restrict(), (req, res, next) => {
 	req.session.destroy((err) => {
+		console.log(req.body)
 		if (err) {
 			next(err)
 		} else {

@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs")
-const db = require("../database/config")
+const db = require("../data/config")
 
 async function add(user) {
 	user.password = await bcrypt.hash(user.password, 14)
@@ -9,18 +9,18 @@ async function add(user) {
 }
 
 function find() {
-	return db("users").select("id", "username")
+	return db("users").select("id", "name")
 }
 
 function findBy(filter) {
 	return db("users")
-		.select("id", "username", "password")
+		.select("id", "name", "password")
 		.where(filter)
 }
 
 function findById(id) {
 	return db("users")
-		.select("id", "username")
+		.select("id", "name")
 		.where({ id })
 		.first()
 }
