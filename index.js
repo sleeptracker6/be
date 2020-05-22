@@ -14,10 +14,10 @@ server.use(helmet())
 server.use(express.json())
 server.use(cookieParser())
 server.use(session({
-	name: "sess", // overwrites the default cookie name, hides our stack better
-	resave: false, // avoid recreating sessions that have not changed
-	saveUninitialized: false, // GDPR laws against setting cookies automatically
-	secret: "keep it secret, keep it safe", // cryptographically sign the cookie
+	name: "sess", 
+	resave: false, 
+	saveUninitialized: false, 
+	secret: "keep it secret, keep it safe", 
 }))
 
 
