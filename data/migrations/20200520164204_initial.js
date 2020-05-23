@@ -7,7 +7,7 @@ exports.up = async function(knex) {
 
     await knex.schema.createTable("sleep_entries", (table) => {
         table.increments("id")
-        table.date("date").notNull().unique()
+        table.date("date").notNull()
         table.timestamp("fell_asleep").notNull()
         table.timestamp("woke_up").notNull()
         table.float("total_time_slept")
