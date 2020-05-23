@@ -1,15 +1,28 @@
 const db = require("../data/config")
 
+function findById(id) {
+	return db("users")
+		.where({ id })
+		.first()
+}
+
 //endpoint to view all entries
 
 function findUserEntries(userId) {
     return db("sleep_entries as s")
         .join("users as u", "u.id", "s.user_id")
         .where({ user_id: userId})
-        .select(["u.id", "s.date", "s.fell_asleep", "s.woke_up", "s.total_time_slept"])
+        .select(["s.date", "s.fell_asleep", "s.woke_up", "s.total_time_slept", "s.id as Entry_Id"])
 }
 
 //endpoint to view entry by date
+
+function findUserEntryById(userId, id) {
+	return db("sleep_entries")
+        .where({ id, user_id: userId })
+        .select(["id", "date", "fell_asleep", "woke_up", "total_time_slept"])
+		.first()
+}
 
 
 
@@ -31,5 +44,7 @@ function findUserEntries(userId) {
 //By moods_by_date Id, Brings in date from sleep_entries table
 
 module.exports = {
-	findUserEntries,
+    findUserEntries,
+    findById,
+    findUserEntryById
 }

@@ -6,7 +6,7 @@ const router = express.Router()
 
 //endpoint to view all entries by user id
 
-router.get("/:id/", restrict("normal"), async (req, res, next) => {
+router.get("/:id/", validateUserId(), async (req, res, next) => {
 	try {
 		res.json(await Entries.findUserEntries(req.params.id))
 	} catch(err) {
@@ -16,8 +16,19 @@ router.get("/:id/", restrict("normal"), async (req, res, next) => {
 
 //endpoint to view entry by date
 
-router.get("/entry/:id", async (req, res, next) => {
-    return null
+router.get("/:id/entry/:entryId", validateUserId(), async (req, res, next) => {
+    try{
+        const entry = await Entries.findUserEntryById(req.params.id, req.params.entryId)
+            if (entry) {
+                res.status(201).json(entry)
+            } else {
+                res.status(404).json({
+                    message: "Could not find post"
+                })
+            }
+    } catch(err) {
+        next(err)
+    }
 })
 
 
@@ -66,6 +77,27 @@ router.post("/mood/night", async (req, res, next) => {
 //Endpoint that takes morning/afternoon/night scores and gives average
 //By moods_by_date Id
 
+
+//User Id Validation
+
+function validateUserId() {
+	return (req, res, next) => {
+		Entries.findById(req.params.id)
+			.then((user) => {
+				if (user) {
+					req.user = user
+					next()
+				} else {
+					res.status(404).json({
+						message: "User not found",
+					})
+				}
+			})
+			.catch((error) => {
+				next(error)
+			})
+	}
+}
 
 
 module.exports = router

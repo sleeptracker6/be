@@ -144,18 +144,18 @@ _http method_: **[GET]**
 ```
 [
   {
-    "id": 1,
     "date": "2020-05-20",
     "fell_asleep": "2020-05-20 12:00:00",
     "woke_up": "2020-05-20 08:00:00",
-    "total_time_slept": null
+    "total_time_slept": null,
+    "Entry_Id": 1
   },
   {
-    "id": 2,
     "date": "2020-05-21",
     "fell_asleep": "2020-05-20 10:00:00",
     "woke_up": "2020-05-20 06:00:00",
-    "total_time_slept": 8
+    "total_time_slept": 8,
+    "Entry_Id": 2
   }
 ]
 ```
@@ -168,14 +168,64 @@ _http method_: **[GET]**
   }
 ```
 
+##### 404 (Invalid User)
+
+```
+  {
+    message: "User not found"
+  }
+```
+
 ##### 500 (Bad Request)
 
 ```
   {
-    message: "Error logging in",
-    error: {
-      "errno": 1,
-      "code": "SOME_ERROR"
-    }
+    message: "Something went wrong",
+  }
+```
+
+### **Get A single Entry By User Id and Entry Id**
+
+_method url_: `/entries/:id/entry/:entryId`
+
+_http method_: **[GET]**
+
+#### Headers
+
+| name            | type   | required | description                    |
+| --------------  | ------ | -------- | ------------------------------ |
+| `Authorization` | String | Yes      | Authorization token from login |
+
+#### Response
+
+##### 200 (ok)
+
+###### Example response
+
+```
+[
+{
+  "id": 1,
+  "date": "2020-05-20",
+  "fell_asleep": "2020-05-20 12:00:00",
+  "woke_up": "2020-05-20 08:00:00",
+  "total_time_slept": null
+}
+]
+```
+
+##### 404 (Not Found)
+
+```
+  {
+    message: "Could not find post"
+  }
+```
+
+##### 500 (Bad Request)
+
+```
+  {
+    message: "Something went wrong",
   }
 ```
