@@ -123,9 +123,9 @@ _http method_: **[POST]**
 
 **/--------------------------------------------/ USER ROUTES /-----------------------------------/**
 
-### **Get all Entries**
+### **Get all Entries By a Users ID**
 
-_method url_: `/entries`
+_method url_: `/entries/:id`
 
 _http method_: **[GET]**
 

@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser")
 const authRouter = require("./auth/auth-router")
 const usersRouter = require("./users/users-router")
 const entriesRouter = require("./sleepEntry/sleepEntry-router")
+const restrict = require("./middleware/restrict")
 
 const server = express()
 const port = process.env.PORT || 8080
@@ -24,7 +25,7 @@ server.use(session({
 
 server.use("/auth", authRouter)
 server.use("/users", usersRouter)
-server.use("/entries", entriesRouter)
+server.use("/entries", entriesRouter) //add restrict() when done
 
 server.get("/", (req, res, next) => {
 	res.json({
