@@ -120,3 +120,62 @@ _http method_: **[POST]**
     message: "Something went wrong",
   }
 ```
+
+**/--------------------------------------------/ USER ROUTES /-----------------------------------/**
+
+### **Get all Entries**
+
+_method url_: `/entries`
+
+_http method_: **[GET]**
+
+#### Headers
+
+| name            | type   | required | description                    |
+| --------------  | ------ | -------- | ------------------------------ |
+| `Authorization` | String | Yes      | Authorization token from login |
+
+#### Response
+
+##### 200 (ok)
+
+###### Example response
+
+```
+[
+  {
+    "id": 1,
+    "date": "2020-05-20",
+    "fell_asleep": "2020-05-20 12:00:00",
+    "woke_up": "2020-05-20 08:00:00",
+    "total_time_slept": null
+  },
+  {
+    "id": 2,
+    "date": "2020-05-21",
+    "fell_asleep": "2020-05-20 10:00:00",
+    "woke_up": "2020-05-20 06:00:00",
+    "total_time_slept": 8
+  }
+]
+```
+
+##### 401 (UnAuthorized)
+
+```
+  {
+    message: "Invalid or expired token"
+  }
+```
+
+##### 500 (Bad Request)
+
+```
+  {
+    message: "Error logging in",
+    error: {
+      "errno": 1,
+      "code": "SOME_ERROR"
+    }
+  }
+```
