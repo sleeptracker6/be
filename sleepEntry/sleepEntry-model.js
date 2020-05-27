@@ -28,11 +28,28 @@ function findUserEntryById(userId, id) {
 
 //Endpoint to create Entry
 
+function add(entry) {
+	return db("sleep_entries")
+		.insert(entry)
+}
+
 //Endpoint to edit Entry
 //By sleep_entries Id
 
+function update(entry, id) {
+    return db("sleep_entries")
+        .update(entry)
+        .where({ id })
+}
+
 //Endpoint to delete Entry
 //By sleep_entries Id
+
+function remove(userId, id) {
+    return db("sleep_entries")
+        .where({ id, user_id: userId })
+        .del()
+}
 
 //Endpoint to submit rating of 1 - 4 for mood when waking up
 //By moods_by_date Id, Brings in date from sleep_entries table
@@ -46,5 +63,8 @@ function findUserEntryById(userId, id) {
 module.exports = {
     findUserEntries,
     findById,
-    findUserEntryById
+    findUserEntryById,
+    add,
+    update,
+    remove,
 }

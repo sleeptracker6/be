@@ -229,3 +229,161 @@ _http method_: **[GET]**
     message: "Something went wrong",
   }
 ```
+
+### **Create a new Entry by User ID**
+
+_method url_: `/entries/:id/create`
+
+_http method_: **[POST]**
+
+#### Headers
+
+| name            | type   | required | description                    |
+| --------------  | ------ | -------- | ------------------------------ |
+| `Authorization` | String | Yes      | Authorization token from login |
+
+#### Response
+
+##### 201 (Created)
+
+##### Example of Entry Format
+
+```
+{
+	"date": "2020-05-26",
+	"fell_asleep": "2020-05-26 12:00:00",
+	"woke_up": "2020-05-26 23:00:00",
+  "total_time_slept": 11
+}
+
+Date Format: YYYY-MM-DD
+
+"fell_asleep" and "woke_up" format: YYYY(year)-MM(month)-DD(day) HH(hour)-MM(minute)--SS(second)
+
+"total_time_slept" format: decimal value, NOT REQUIRED for a valid response
+
+
+```
+
+###### Example response
+
+```
+{
+  "message": "Entry created.",
+  "data": [
+    22
+  ]
+}
+```
+
+##### 404 (Not Found)
+
+```
+  {
+    message: "Could not add entry."
+  }
+```
+
+##### 500 (Bad Request)
+
+```
+  {
+    message: "Something went wrong",
+  }
+```
+
+### **Update an Entry by User ID**
+
+_method url_: `/entries/:id/edit/entryId`
+
+_http method_: **[PUT]**
+
+#### Headers
+
+| name            | type   | required | description                    |
+| --------------  | ------ | -------- | ------------------------------ |
+| `Authorization` | String | Yes      | Authorization token from login |
+
+#### Response
+
+##### 201 (Created)
+
+##### Example of Entry Format
+
+```
+{
+	"date": "2020-05-26",
+	"fell_asleep": "2020-05-26 12:00:00",
+	"woke_up": "2020-05-26 23:00:00",
+  "total_time_slept": 11
+}
+
+Date Format: YYYY-MM-DD
+
+"fell_asleep" and "woke_up" format: YYYY(year)-MM(month)-DD(day) HH(hour)-MM(minute)--SS(second)
+
+"total_time_slept" format: decimal value
+
+
+```
+
+###### Example response
+
+```
+{
+  "message": "Entry updated.",
+  "data": [
+    22
+  ]
+}
+```
+
+##### 404 (Not Found)
+
+```
+  {
+    message: "Could not update entry."
+  }
+```
+
+##### 500 (Bad Request)
+
+```
+  {
+    message: "Something went wrong",
+  }
+```
+
+### **Delete an Entry by User ID**
+
+_method url_: `/entries/:id/delete/entryId`
+
+_http method_: **[DELETE]**
+
+#### Headers
+
+| name            | type   | required | description                    |
+| --------------  | ------ | -------- | ------------------------------ |
+| `Authorization` | String | Yes      | Authorization token from login |
+
+#### Response
+
+##### 204 (No Content)
+
+
+
+##### 404 (Not Found)
+
+```
+  {
+    message: "Could not delete entry."
+  }
+```
+
+##### 500 (Bad Request)
+
+```
+  {
+    message: "Something went wrong",
+  }
+```
