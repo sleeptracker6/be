@@ -1,6 +1,7 @@
 const express = require("express")
 const restrict = require("../middleware/restrict")
 const Entries = require("./sleepEntry-model")
+const db = require("../data/config")
 
 const router = express.Router()
 
@@ -35,22 +36,62 @@ router.get("/:id/entry/:entryId", validateUserId(), async (req, res, next) => {
 //Endpoint to create Entry
 
 
-router.post("/create", async (req, res, next) => {
-    return null
+router.post("/:id/create", validateUserId(), async (req, res, next) => {
+    try {
+		const newEntry = {
+			...req.body,
+			user_id: req.params.id
+		}
+		const data = await Entries.add(newEntry)
+		console.log(data)
+
+			if (data) {
+				res.status(201).json({ message: 'Entry created.', data: data })
+			} else {
+				res.status(404).json({ message: 'Could not add entry.' })
+			}
+	} catch(err) {
+		next(err)
+	}
 })
 
 //Endpoint to edit Entry
 //By sleep_entries Id
 
-router.put("/edit", async (req, res, next) => {
-    return null
+router.put("/:id/edit/:entryId", validateUserId(), async (req, res, next) => {
+	try {
+		const updatedEntry = {
+			...req.body,
+			user_id: req.params.id
+		}
+
+		const updatedData = await Entries.update(updatedEntry, req.params.entryId)
+
+		if (updatedData) {
+			res.status(201).json({ message: 'Entry updated.', data: updatedData })
+		} else {
+			res.status(404).json({ message: 'Could not update entry '})
+		}
+	} catch(err) {
+		next(err)
+	}
 })
 
 //Endpoint to delete Entry
 //By sleep_entries Id
 
-router.delete("/delete", async (req, res, next) => {
-    return null
+router.delete("/:id/delete/:entryId", validateUserId(), async (req, res, next) => {
+    try {
+		const delEntry = await Entries.remove(req.params.id, req.params.entryId)
+
+		if (delEntry) {
+			res.status(204).json({message: 'Entry deleted.', data: delEntry})
+		} else {
+			res.status(404).json({ message: 'Could not delete entry '})
+		}
+	} catch(err) {
+		next(err)
+	}
 })
 
 //Endpoint to submit rating of 1 - 4 for mood when waking up
