@@ -4,7 +4,7 @@ const db = require("../data/config")
 async function add(user) {
 	user.password = await bcrypt.hash(user.password, 14)
 
-	const [id] = await db("users").insert(user)
+	const [id] = await db("users").insert(user).returning("id")
 	return findById(id)
 }
 
