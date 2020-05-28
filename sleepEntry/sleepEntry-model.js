@@ -1,9 +1,9 @@
 const db = require("../data/config")
 
 function findById(id) {
-	return db("users")
-		.where({ id })
-		.first()
+    return db("users")
+        .where({ id })
+        .first()
 }
 
 //endpoint to view all entries
@@ -11,17 +11,17 @@ function findById(id) {
 function findUserEntries(userId) {
     return db("sleep_entries as s")
         .join("users as u", "u.id", "s.user_id")
-        .where({ user_id: userId})
+        .where({ user_id: userId })
         .select(["s.date", "s.fell_asleep", "s.woke_up", "s.total_time_slept", "s.id as Entry_Id"])
 }
 
 //endpoint to view entry by date
 
 function findUserEntryById(userId, id) {
-	return db("sleep_entries")
+    return db("sleep_entries")
         .where({ id, user_id: userId })
         .select(["id", "date", "fell_asleep", "woke_up", "total_time_slept"])
-		.first()
+        .first()
 }
 
 
@@ -29,8 +29,8 @@ function findUserEntryById(userId, id) {
 //Endpoint to create Entry
 
 function add(entry) {
-	return db("sleep_entries")
-		.insert(entry)
+    return db("sleep_entries")
+        .insert(entry)
 }
 
 //Endpoint to edit Entry
@@ -51,6 +51,14 @@ function remove(userId, id) {
         .del()
 }
 
+//Get all moods
+
+function getMoods() {
+    return db("moods_by_date")
+        .select("entry_id", "waking", "day", "evening")
+}
+
+
 //Get all moods by user
 
 function getUsersMoods(userId) {
@@ -64,9 +72,9 @@ function getUsersMoods(userId) {
 //Endpoint to submit rating of 1 - 4 for mood when waking up
 //By moods_by_date Id, Brings in date from sleep_entries table
 
-function postMood(mood, id) {
+function postMood(mood, id, userId) {
     return db("moods_by_date")
-        .where({ id })
+        .where({ id, user_id: userId })
         .insert(mood)
 }
 
@@ -96,6 +104,7 @@ module.exports = {
     add,
     update,
     remove,
+    getMoods,
     getUsersMoods,
     postMood,
     updateMood,
