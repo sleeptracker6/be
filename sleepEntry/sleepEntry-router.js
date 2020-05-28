@@ -104,6 +104,39 @@ router.get("/:id/moods", validateUserId(), async (req, res, next) => {
 	}
 })
 
+router.post("/:id/:dateId/mood", validateUserId(), async (req, res, next) => {
+	console.log(req.params)
+    try {
+			// Check what user sends
+			// const objectToSend = {};
+			// Object.keys(req.body).map(key => {
+			// 	value = req.body[key]
+			// 	if (value) {
+			// 		objectToSend[key] = value
+			// 	}
+			// })
+
+			const payload = {
+				...req.body,
+				user_id: req.params.id
+
+			}
+
+
+		const insertFour = await Entries.postMood(payload, req.params.dateId)
+		console.log("Result of insert:", req.body)
+		
+		if (insertFour) {
+			res.status(201).json(insertFour)
+		} else {
+			res.status(404).json({ message: 'Could not update mood.'} )
+		}
+	} catch(err) {
+		console.log(err)
+		res.status(500).json({ err: 'Mood has already been posted for this date.'})
+	}
+})
+
 //Updates moods
 
 router.put("/:id/:dateId/mood", validateUserId(), async (req, res, next) => {

@@ -16,9 +16,9 @@ exports.up = async function(knex) {
 
     await knex.schema.createTable("moods_by_date", (table) => {
         table.increments("id")
-        table.integer("waking").defaultTo("")
-        table.integer("day").defaultTo("")
-        table.integer("evening").defaultTo("")
+        table.integer("waking").defaultTo(4)
+        table.integer("day").defaultTo(4)
+        table.integer("evening").defaultTo(4)
         table.float("daily_average")
         table.integer("entry_id").unique().references("id").inTable("sleep_entries")
         table.integer("user_id").references("id").inTable("users")
