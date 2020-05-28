@@ -43,7 +43,7 @@ router.post("/:id/create", validateUserId(), async (req, res, next) => {
 			user_id: req.params.id
 		}
 		const data = await Entries.add(newEntry)
-		console.log(data)
+		console.log(newEntry)
 
 			if (data) {
 				res.status(201).json({ message: 'Entry created.', data: data })
@@ -94,26 +94,46 @@ router.delete("/:id/delete/:entryId", validateUserId(), async (req, res, next) =
 	}
 })
 
-//Endpoint to submit rating of 1 - 4 for mood when waking up
-//By moods_by_date Id
+//Get all moods by user
 
-router.post("/mood/morning", async (req, res, next) => {
-    return null
+router.get("/:id/moods", validateUserId(), async (req, res, next) => {
+	try {
+		res.json(await Entries.getUsersMoods(req.params.id))
+	} catch(err) {
+		next(err)
+	}
 })
 
-//Endpoint to submit rating of 1 - 4 for mood during the day
-//By moods_by_date Id
+//Updates moods
 
-router.post("/mood/afternoon", async (req, res, next) => {
-    return null
+router.put("/:id/:dateId/mood", validateUserId(), async (req, res, next) => {
+	console.log(req.params)
+    try {
+			// Check what user sends
+			const objectToSend = {};
+			Object.keys(req.body).map(key => {
+				value = req.body[key]
+				if (value) {
+					objectToSend[key] = value
+				}
+			})
+
+
+		const insertFour = await Entries.updateMood(objectToSend, req.params.dateId)
+		console.log("Result of insert:", insertFour)
+		
+		if (insertFour) {
+			res.status(201).json(insertFour)
+		} else {
+			res.status(404).json({ message: 'Could not update mood.'} )
+		}
+	} catch(err) {
+		console.log(err)
+		res.status(500).json({ err: 'Mood has already been posted for this date.'})
+	}
 })
 
-//Endpoint to submit rating of 1 - 4 for mood in the evening
-//By moods_by_date Id
 
-router.post("/mood/night", async (req, res, next) => {
-    return null
-})
 
 //Endpoint that takes morning/afternoon/night scores and gives average
 //By moods_by_date Id

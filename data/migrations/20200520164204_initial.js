@@ -16,11 +16,12 @@ exports.up = async function(knex) {
 
     await knex.schema.createTable("moods_by_date", (table) => {
         table.increments("id")
-        table.integer("waking").notNull()
-        table.integer("day").notNull()
-        table.integer("evening").notNull()
+        table.integer("waking").defaultTo("")
+        table.integer("day").defaultTo("")
+        table.integer("evening").defaultTo("")
         table.float("daily_average")
-        table.integer("entry_id").references("id").inTable("sleep_entries")
+        table.integer("entry_id").unique().references("id").inTable("sleep_entries")
+        table.integer("user_id").references("id").inTable("users")
     })
 };
 

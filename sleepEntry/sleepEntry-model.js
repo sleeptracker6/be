@@ -51,8 +51,37 @@ function remove(userId, id) {
         .del()
 }
 
+//Get all moods by user
+
+function getUsersMoods(userId) {
+    return db("sleep_entries as se")
+        .where("se.user_id", userId)
+        .join("users as u", "u.id", "se.user_id")
+        .join("moods_by_date as mbd", "mbd.entry_id", "se.id")
+        .select("mbd.id", "u.name", "se.date", "mbd.waking", "mbd.day", "mbd.evening")
+}
+
 //Endpoint to submit rating of 1 - 4 for mood when waking up
 //By moods_by_date Id, Brings in date from sleep_entries table
+
+function postMood(mood, id) {
+    return db("moods_by_date")
+        .where({ id })
+        .insert(mood)
+}
+
+function updateMood(mood, id) {
+    return db("moods_by_date")
+        .where({ id })
+        .update(mood)
+}
+
+// function enterMood(id, mood) {
+//     let entry = db("moods_by_date")
+//         .where({ id })
+//         return entry.update(...entry, )
+// }
+
 
 //Endpoint to submit rating of 1 - 4 for mood during the day
 //By moods_by_date Id, Brings in date from sleep_entries table
@@ -67,4 +96,7 @@ module.exports = {
     add,
     update,
     remove,
+    getUsersMoods,
+    postMood,
+    updateMood,
 }
