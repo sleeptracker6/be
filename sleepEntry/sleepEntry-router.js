@@ -93,6 +93,19 @@ router.delete("/:id/delete/:entryId", validateUserId(), async (req, res, next) =
 	}
 })
 
+//GET all moods
+
+router.get("/moods", async (req, res, next) => {
+	try {
+		const moods = await Entries.getMoods()
+		res.status(200).json(moods)
+	} catch (err) {
+		next(err)
+	}
+})
+
+
+
 //Get all moods by user
 
 router.get("/:id/moods", validateUserId(), async (req, res, next) => {
