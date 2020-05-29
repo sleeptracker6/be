@@ -404,6 +404,16 @@ _http method_: **[POST]**
 
 ##### 201 (Created)
 
+##### Example of Entry Format
+
+```
+{
+	"day": 4,
+	"waking": 3,
+	"evening": 2
+}
+
+```
 
 
 ##### 404 (Not Found)
@@ -438,6 +448,16 @@ _http method_: **[PUT]**
 
 ##### 201 (Created)
 
+##### Example of Entry Format
+
+```
+{
+	"day": 4,
+	"waking": 3,
+	"evening": 2
+}
+
+```
 
 
 ##### 404 (Not Found)
