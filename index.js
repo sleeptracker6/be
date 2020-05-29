@@ -16,16 +16,16 @@ server.use(helmet())
 server.use(express.json())
 server.use(cookieParser())
 server.use(session({
-	name: "sess", 
-	resave: false, 
-	saveUninitialized: false, 
-	secret: "keep it secret, keep it safe", 
+	name: "sess",
+	resave: false,
+	saveUninitialized: false,
+	secret: "keep it secret, keep it safe",
 }))
 
 
 server.use("/auth", authRouter)
 server.use("/users", usersRouter)
-server.use("/entries", entriesRouter) //add restrict() when done
+server.use("/entries", restrict(), entriesRouter)
 
 server.get("/", (req, res, next) => {
 	res.json({

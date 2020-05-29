@@ -2,7 +2,7 @@
 
 **/--------------------------------------------/ AUTH ROUTES /-----------------------------------/**
 
-**Register a Teacher**
+**Register a User**
 _method url_: `/auth/register`
 
 _http method_: **[POST]**
@@ -377,6 +377,94 @@ _http method_: **[DELETE]**
 ```
   {
     message: "Could not delete entry."
+  }
+```
+
+##### 500 (Bad Request)
+
+```
+  {
+    message: "Something went wrong",
+  }
+```
+
+### **POST Mood by User ID and Date Id**
+
+_method url_: `/entries//:id/:dateId/mood`
+
+_http method_: **[POST]**
+
+#### Headers
+
+| name            | type   | required | description                    |
+| --------------  | ------ | -------- | ------------------------------ |
+| `Authorization` | String | Yes      | Authorization token from login |
+
+#### Response
+
+##### 201 (Created)
+
+##### Example of Entry Format
+
+```
+{
+	"day": 4,
+	"waking": 3,
+	"evening": 2
+}
+
+```
+
+
+##### 404 (Not Found)
+
+```
+  {
+    message: "Could not add mood(s)."
+  }
+```
+
+##### 500 (Bad Request)
+
+```
+  {
+    message: "Something went wrong",
+  }
+```
+
+### **Update Mood by User ID and Date Id**
+
+_method url_: `/entries//:id/:dateId/mood`
+
+_http method_: **[PUT]**
+
+#### Headers
+
+| name            | type   | required | description                    |
+| --------------  | ------ | -------- | ------------------------------ |
+| `Authorization` | String | Yes      | Authorization token from login |
+
+#### Response
+
+##### 201 (Created)
+
+##### Example of Entry Format
+
+```
+{
+	"day": 4,
+	"waking": 3,
+	"evening": 2
+}
+
+```
+
+
+##### 404 (Not Found)
+
+```
+  {
+    message: "Could not update mood(s)."
   }
 ```
 

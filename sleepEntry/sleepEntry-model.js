@@ -51,6 +51,14 @@ function remove(userId, id) {
         .del()
 }
 
+//Get all moods
+
+function getMoods() {
+    return db("moods_by_date")
+        .select("entry_id", "waking", "day", "evening")
+}
+
+
 //Get all moods by user
 
 function getUsersMoods(userId) {
@@ -96,6 +104,7 @@ module.exports = {
     add,
     update,
     remove,
+    getMoods,
     getUsersMoods,
     postMood,
     updateMood,

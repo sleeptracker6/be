@@ -26,6 +26,9 @@
     "sqlite3": "^4.2.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupFiles": [
+      "dotenv/config"
+    ]
   }
 }

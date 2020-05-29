@@ -4,6 +4,18 @@ const Entries = require("./sleepEntry-model")
 
 const router = express.Router()
 
+//GET all moods
+
+router.get("/moods", async (req, res, next) => {
+	try {
+		console.log("1")
+		const moods = await Entries.getMoods()
+		res.status(200).json(moods)
+	} catch (err) {
+		next(err)
+	}
+})
+
 //endpoint to view all entries by user id
 
 router.get("/:id/", validateUserId(), async (req, res, next) => {
@@ -92,6 +104,10 @@ router.delete("/:id/delete/:entryId", validateUserId(), async (req, res, next) =
 		next(err)
 	}
 })
+
+
+
+
 
 //Get all moods by user
 
